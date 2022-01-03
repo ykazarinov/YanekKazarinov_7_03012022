@@ -1,0 +1,27 @@
+{
+  "name": "lespetitsplats",
+  "version": "1.0.0",
+  "description": "Project #7 Lespetits plats",
+  "main": "scripts/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykazarinov/YanekKazarinov_7_03012022.git"
+  },
+  "keywords": [
+    "P7",
+    "algoritms",
+    "lespetitsplats"
+  ],
+  "author": "Kazarinov Yanek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ykazarinov/YanekKazarinov_7_03012022/issues"
+  },
+  "homepage": "https://github.com/ykazarinov/YanekKazarinov_7_03012022#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}
