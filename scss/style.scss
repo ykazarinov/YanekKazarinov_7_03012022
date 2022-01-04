@@ -1,2 +1,9 @@
 @import "variable_overrides";  // <-- ajouter cette ligne tout en haut du fichier
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+#searchInput{
+    background-image: url(../images/search.svg);
+    background-repeat: no-repeat;
+    background-position-x: 99%;
+    background-position-y: center;
+}
