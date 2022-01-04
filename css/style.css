@@ -11218,6 +11218,7 @@ hr:not([size]) {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+  font-family: "Lato", sans-serif;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -22242,6 +22243,67 @@ textarea.form-control-lg {
   background-repeat: no-repeat;
   background-position-x: 99%;
   background-position-y: center;
+}
+
+.card-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.7rem;
+  overflow: hidden;
+  line-height: 1rem;
+  max-height: 5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.ingredients {
+  font-family: "Lato", sans-serif;
+  font-size: 0.7rem;
+}
+
+dt, dd {
+  display: inline;
+  line-height: 1rem;
+}
+
+dd:after {
+  content: "\a";
+  white-space: pre;
+}
+
+.card-title {
+  line-height: 2rem;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  width: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+.time {
+  line-height: 2rem;
+  background-image: url("../images/time.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+  width: unset;
+  display: flex;
+  align-items: center;
+  padding-left: 1.7rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-container {
+  display: flex;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
 /*# sourceMappingURL=style.css.map */
