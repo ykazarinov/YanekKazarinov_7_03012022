@@ -52,7 +52,7 @@ class cardTemplate{
         let cardContent = 
         `<div class="card bg-light border-0">
             <img class="card-img-top" src="images/empty.jpg" alt="${this.name}">
-            <div class="card-body flex">
+            <div class="card-body">
                 <div class = 'row title mb-2'>
                     <h5 class="card-title" title='${this.name}'>${this.name}</h5>
                     <div class='time'>${this.time} min</div>

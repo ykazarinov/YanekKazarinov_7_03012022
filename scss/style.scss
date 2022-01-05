@@ -1,6 +1,10 @@
 @import "variable_overrides";  // <-- ajouter cette ligne tout en haut du fichier
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+.flex{
+    display: flex;
+}
+
 #searchInput{
     background-image: url(../images/search.svg);
     background-repeat: no-repeat;
@@ -74,5 +78,106 @@ dt, dd{
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
+}
+
+// select.form-control {
+//     // -webkit-appearance: menulist;
+
+//     background-image: url('../images/arrow-down.svg');
+//     background-repeat: no-repeat;
+//     background-position: 95% center;
+//     background-size: .8rem;
+//     font-family: $font-family-lato;
+//     font-size: 1rem;
+//     font-weight: bold;
+//     display: flex;
+//     option{
+//         min-height: .2em;
+//     }
+
+// }
+
+#ingredients{
+    background-color: $blue;
+    ul{
+        background-color: $blue; 
+    }
+}
+
+#appareil{
+    background-color: $red;
+    ul{
+        background-color: $red
+    }
+}
+
+#ustensiles{
+    background-color: $green;
+    ul{
+        background-color: $green;  
+    }
+}
+
+.column-8{column-count: 8;}
+.column-5{column-count: 5;}
+.column-3{column-count: 3;}
+.column-1{column-count: 1;}
+
+
+.sort-select{
+    position: relative;
+    margin-right: 2rem;
+    padding: 0;
+    border-radius: 5px;
+    
+    
+    input{
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        font-weight: bold;
+        font-family: $font-family-lato;
+        font-size: 1.2rem;
+        padding: 1.5rem;
+        color: #fff;
+        background-image: url('../images/arrow-down.svg');
+        background-repeat: no-repeat;
+        background-position: 95% center;
+        &::placeholder{
+            color: #fff;
+            
+        }
+    }
+    .sort-list{
+        display: none;
+        position: absolute;
+        z-index: 1;
+        color: #fff;
+        list-style: none;
+        min-width: 100%;
+        padding: 1.2rem;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        font-family: $font-family-lato;
+        font-size: 1rem;
+        
+        li{
+            line-height: 1.2rem;
+            width: 7.5rem;
+            margin-bottom: .5rem;
+        }
+    }
+    &.active{
+        .sort-list{
+            display: block;
+        }
+        input{
+            background-image: url('../images/arrow-up.svg');
+            &::placeholder{
+                color: rgba(255, 255, 255, .5);
+            }
+        }
+    }
+    
 }
 

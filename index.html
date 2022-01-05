@@ -29,17 +29,40 @@
           <input type="text" class="form-control bg-light p-3 border-0" id="searchInput" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"  aria-label="Recipient's username" aria-describedby="basic-addon2">
         </div>
       </section>
-      <section id="tags-section" class="row mt-2">
+      <section id="tags-section" class="row mt-3">
         <div class="col-12">
 
         </div>
       </section>
-      <section id='sorting-section' class="row mt-2">
-        <div class="col-12">
+      <section id='sorting-section' class="row mt-3">
+       
+
+        <div class="col-12 flex">
+
+          <div id='ingredients' class='sort-select col-lg-2 col-md-3'>
+            <input type="text" placeholder="Ingredients" value=''>
+            <ul class='sort-list column-8'>
+            
+            </ul>
+          </div>
+
+          <div id='appareil' class='sort-select col-lg-2 col-md-3'>
+            <input type="text" placeholder="Appareil" value=''>
+            <ul class='sort-list column-3'>
+             
+            </ul>
+          </div>
+
+          <div id='ustensiles' class='sort-select col-lg-2 col-md-3'>
+            <input type="text" placeholder="Ustensiles" value=''>
+            <ul class='sort-list column-3'>
+             
+            </ul>
+          </div>
 
         </div>
       </section>
-      <main id='cards-section' class="row mt-2">
+      <main id='cards-section' class="row mt-3">
        
       </main>
     </div>
@@ -60,6 +83,9 @@
 
     <!--My scripts-->
     <script src='scripts/templates/card.js'></script>
+    <script src='scripts/templates/sort.js'></script>
+
+    <script src='scripts/factories/select_factory.js'></script>
 
     <script src="scripts/index.js"></script>
 

@@ -7,7 +7,18 @@ class init{
             cardsSection.appendChild(cardDOM)
         })
     }
+
+    displaySelect(){
+        let selectIds = document.querySelectorAll('.sort-select')
+        selectIds.forEach((elem) => {
+            let mySelect = new selectFactory(elem.id)
+            mySelect.openSelect()
+            mySelect.getList()
+            mySelect.setListToDOM()
+        })
+    }
 }
 
 let myInit = new init()
 myInit.displayData(recipes)
+myInit.displaySelect()
