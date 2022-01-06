@@ -11,6 +11,10 @@ class sortSelectTemplate{
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    removeList(){
+        this.select.querySelector('.sort-list').innerHTML = ''
+    }
+
     openSelect(){
        let that = this
        let input = that.select.querySelector('input')
@@ -74,7 +78,7 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
     openSelect(){
         return super.openSelect()
     }
-    getList(){
+    getList(recipes){
         let allIngredients = []
         recipes.forEach((recipe) => {
             recipe.ingredients.forEach((myIngredient) => {
@@ -92,8 +96,8 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
         return allIngredients
     }
 
-    setListToDOM(){
-        this.getList().forEach((ingredient) => {
+    setListToDOM(recipes){
+        this.getList(recipes).forEach((ingredient) => {
             let li = document.createElement("li")
             li.innerHTML = ingredient
             this.select.querySelector('.sort-list').appendChild(li)
@@ -115,7 +119,7 @@ class appareilSelectTemplate extends sortSelectTemplate{
     openSelect(){
         return super.openSelect()
     }
-    getList(){
+    getList(recipes){
         let allAppareils = []
         recipes.forEach((recipe) => {
             let verif = false
@@ -131,8 +135,8 @@ class appareilSelectTemplate extends sortSelectTemplate{
         return allAppareils
     }
 
-    setListToDOM(){
-        this.getList().forEach((appliance) => {
+    setListToDOM(recipes){
+        this.getList(recipes).forEach((appliance) => {
             let li = document.createElement("li")
             li.innerHTML = appliance
             this.select.querySelector('.sort-list').appendChild(li)
@@ -154,7 +158,7 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     openSelect(){
         return super.openSelect()
     }
-    getList(){
+    getList(recipes){
         let allUstensiles = []
         recipes.forEach((recipe) => {
             recipe.ustensils.forEach((myUstensil) => {
@@ -172,8 +176,8 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
         return allUstensiles
     }
 
-    setListToDOM(){
-        this.getList().forEach((ustensile) => {
+    setListToDOM(recipes){
+        this.getList(recipes).forEach((ustensile) => {
             let li = document.createElement("li")
             li.innerHTML = ustensile
             this.select.querySelector('.sort-list').appendChild(li)
