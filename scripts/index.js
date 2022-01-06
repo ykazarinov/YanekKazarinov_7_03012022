@@ -23,6 +23,15 @@ class init{
         cardsCont.innerHTML = ''
     }
 
+    hiddenNullMessage(){
+        let nullResultsMessage = document.querySelector('#aucune-recette')
+        if(!nullResultsMessage.classList.contains('hidden')){
+            nullResultsMessage.classList.add('hidden')
+            console.log('hidden')
+        }
+
+    }
+
     searchInput(){
         let searchInput = document.querySelector('#searchInput')
         let cardsCont = document.querySelector('#cards-section')
@@ -31,65 +40,84 @@ class init{
         searchInput.addEventListener('input', function(){
             
             // hide the message with null results
-            if(!document.querySelector('#aucune-recette').classList.contains('hidden')){
-                document.querySelector('#aucune-recette').classList.add('hidden')
-            }
-
+            that.hiddenNullMessage()
+            
             if(searchInput.value.length >= 3){
                 
-                that.removeCards()
+                
                 sortedCards = []
+                let isAnyOption = false
 
-                for(let i = 0; i < recipes.length; i++){
-                    let isAnyOption = false
-
-                    // name
-                    if( recipes[i].name.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                        sortedCards.push(recipes[i]) 
-                        isAnyOption = true
-                        
-                    }
-                    // appliance
-                    if(isAnyOption === false){
-                        if(recipes[i].appliance.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            sortedCards.push(recipes[i])
+                
+                that.removeCards()
+                // name
+                if(isAnyOption === false){
+                    for(let i = 0; i < recipes.length; i++){
+                        if( recipes[i].name.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
+                            sortedCards.push(recipes[i]) 
                             isAnyOption = true
+                            that.hiddenNullMessage()
                         }
                     }
+                }
+                // appliance
+                if(isAnyOption === false){
+                    for(let i = 0; i < recipes.length; i++){
+                        if(recipes[i].appliance.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
+                            sortedCards.push(recipes[i])
+                            
+                            isAnyOption = true
+                            that.hiddenNullMessage()
+                        }
+                    }
+                }
 
-                    // ingredients
-                    if(isAnyOption === false){
+                // ingredients
+                if(isAnyOption === false){
+                    for(let i = 0; i < recipes.length; i++){
                         for(let j = 0; j < recipes[i].ingredients.length; j++){
                             if(recipes[i].ingredients[j].ingredient.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
                                 sortedCards.push(recipes[i])
+                                
                                 isAnyOption = true
+                                that.hiddenNullMessage()
                             }
                         }
                     }
+                }
 
-                    // ustensils
-                    if(isAnyOption === false){ 
+                // ustensils
+                if(isAnyOption === false){ 
+                    for(let i = 0; i < recipes.length; i++){
                         for(let j = 0; j < recipes[i].ustensils.length; j++){
                             if(recipes[i].ustensils[j].toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
                                 sortedCards.push(recipes[i])
+                                
                                 isAnyOption = true
+                                that.hiddenNullMessage()
                             }
                         }
                     }
+                }
 
-                    // description
-                    if(isAnyOption === false){
+                // description
+                if(isAnyOption === false){
+                    for(let i = 0; i < recipes.length; i++){
                         if(recipes[i].description.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
                             sortedCards.push(recipes[i])
+                            
                             isAnyOption = true
+                            that.hiddenNullMessage()
                         }
                     }
-                    // null results
-                    if(isAnyOption === false){
-                         document.querySelector('#aucune-recette').classList.remove('hidden')
-                    }
-
                 }
+                // null results
+                if(isAnyOption === false){
+                    let nullResultsMessage = document.querySelector('#aucune-recette')
+                    nullResultsMessage.classList.remove('hidden')
+                    console.log('display')
+                }
+                
 
                 that.displayData(sortedCards)
 
