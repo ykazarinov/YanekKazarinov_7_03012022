@@ -22242,6 +22242,10 @@ textarea.form-control-lg {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 #searchInput {
   background-image: url(../images/search.svg);
   background-repeat: no-repeat;
