@@ -22314,6 +22314,18 @@ dd:after {
   flex-wrap: nowrap;
 }
 
+.ingredients {
+  background-color: #3282F7;
+}
+
+.appareil {
+  background-color: #ED6454;
+}
+
+.ustensiles {
+  background-color: #68D9A4;
+}
+
 #ingredients {
   background-color: #3282F7;
 }
@@ -22399,6 +22411,40 @@ dd:after {
 }
 .sort-select.active input::placeholder {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.tag {
+  font-family: "Lato", sans-serif;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding-left: 1.2rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  padding-right: 1rem;
+  display: flex;
+  width: unset;
+  margin-bottom: 0.3rem;
+  margin-right: 0.3rem;
+}
+.tag .close {
+  background-image: url("../images/close.svg");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.tags-section {
+  display: flex;
+}
+
+.tags-col {
+  display: flex;
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=style.css.map */

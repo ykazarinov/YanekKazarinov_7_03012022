@@ -261,6 +261,22 @@ class init{
         
         
     }
+
+    filterItemClick(){
+        const tagData = {}
+        let tagsContainer = document.querySelector('#tags-section .tags-col')
+        document.addEventListener('click', (e)=>{
+            if(e.target.parentElement.classList.contains('sort-list')){
+                tagData['filterId'] = e.target.parentElement.parentElement.id
+                tagData['filterItemValue'] = e.target.innerHTML
+            
+            let newTag = new tagTemplate(tagData)
+            tagsContainer.appendChild(newTag.getTagDOM())
+            newTag.closeTag()
+            }
+        })
+        
+    }
 }
 
 let myInit = new init()
@@ -268,7 +284,11 @@ myInit.displayData(recipes)
 myInit.displaySelect()
 
 
-    myInit.searchInput()
+myInit.searchInput()
+
+//tags
+myInit.filterItemClick()
+
 
 
    

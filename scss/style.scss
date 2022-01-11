@@ -101,6 +101,17 @@ dt, dd{
 
 // }
 
+
+.ingredients{
+    background-color: $blue;
+}
+.appareil{
+    background-color: $red;
+}
+.ustensiles{
+    background-color: $green;
+}
+
 #ingredients{
     background-color: $blue;
     ul{
@@ -183,5 +194,41 @@ dt, dd{
         }
     }
     
+}
+
+.tag{
+    font-family: $font-family-lato;
+    color: #fff;
+    border-radius: 5px;
+    font-size: .8rem;
+    padding-left: 1.2rem;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+  
+    padding-right: 1rem;
+    display: flex;
+    width: unset;
+    margin-bottom: .3rem;
+    margin-right: .3rem;
+    .close{
+        background-image: url('../images/close.svg');
+        background-repeat: no-repeat;
+        background-position: 95% center;
+        
+        background-size: contain;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        margin-left: .5rem;
+    }
+}
+
+.tags-section{
+    display: flex;
+
+}
+.tags-col{
+    display: flex;
+    flex-direction: row;
 }
 
