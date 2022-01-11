@@ -61,6 +61,62 @@ class sortSelectTemplate{
        })
     }
 
+    inputTextOnFilter(myRecipes){
+        let that = this
+        let myInput = that.select.querySelector('input')
+
+        let filtredItems = []
+        
+        
+        
+            myInput.addEventListener('input', function(){
+                that.removeList()
+                filtredItems = []
+                if(myInput.value.length >= 3){
+                    for(let i = 0; i < that.getList(myRecipes).length; i++){
+                        if(that.getList(myRecipes)[i].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
+                            // console.log(that.getList(myRecipes)[i])
+                            let itemIsExist = false
+                           
+                            for(let j = 0; j<filtredItems.length; j++){
+                                if(filtredItems[j].toLowerCase() === that.getList(myRecipes)[i].toLowerCase()){
+                                    itemIsExist = true
+                                    break
+
+                                }
+                            }
+                            if(!itemIsExist){
+                                filtredItems.push(that.getList(myRecipes)[i])
+                            }
+                           
+
+                            
+                        }
+                        // else{
+                        //     console.log('No')
+                        // }
+                    }
+                    // console.log( filtredItems)
+                    filtredItems.forEach((item)=>{
+                        let li = document.createElement("li")
+                        li.innerHTML = item
+                        that.select.querySelector('.sort-list').appendChild(li)
+                    })
+                    
+
+                    
+                }
+                else{
+                    
+                   
+                    
+                    that.setListToDOM(myRecipes)
+                   
+                }
+            })
+        
+    }
+
     
 }
 
@@ -78,14 +134,23 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
     openSelect(){
         return super.openSelect()
     }
+
+    removeList(){
+        return super.removeList()
+    }
+
+    inputTextOnFilter(myRecipes){
+        return super.inputTextOnFilter(myRecipes)
+    }
     getList(recipes){
         let allIngredients = []
         recipes.forEach((recipe) => {
             recipe.ingredients.forEach((myIngredient) => {
                 let verif = false
-                for(let i = 0; i< allIngredients.length; i++){
+                for(let i = 0; i < allIngredients.length; i++){
                     if(allIngredients[i].toLowerCase() === myIngredient.ingredient.toLowerCase()){
                         verif = true
+                        break
                     }
                 }
                 if(verif === false){
@@ -97,7 +162,9 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
     }
 
     setListToDOM(recipes){
+
         this.getList(recipes).forEach((ingredient) => {
+           
             let li = document.createElement("li")
             li.innerHTML = ingredient
             this.select.querySelector('.sort-list').appendChild(li)
@@ -118,6 +185,12 @@ class appareilSelectTemplate extends sortSelectTemplate{
 
     openSelect(){
         return super.openSelect()
+    }
+    removeList(){
+        return super.removeList()
+    }
+    inputTextOnFilter(myRecipes){
+        return super.inputTextOnFilter(myRecipes)
     }
     getList(recipes){
         let allAppareils = []
@@ -158,6 +231,12 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     openSelect(){
         return super.openSelect()
     }
+    removeList(){
+        return super.removeList()
+    }
+    inputTextOnFilter(myRecipes){
+        return super.inputTextOnFilter(myRecipes)
+    }
     getList(recipes){
         let allUstensiles = []
         recipes.forEach((recipe) => {
@@ -177,6 +256,7 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     }
 
     setListToDOM(recipes){
+        
         this.getList(recipes).forEach((ustensile) => {
             let li = document.createElement("li")
             li.innerHTML = ustensile
