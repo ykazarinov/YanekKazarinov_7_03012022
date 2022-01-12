@@ -58,12 +58,22 @@ class init{
 
     }
 
+    initialSelects(){
+
+        this.mySelect[0].setListToDOM(recipes)
+        this.mySelect[1].setListToDOM(recipes)
+        this.mySelect[2].setListToDOM(recipes)
+
+        this.sortSelect(recipes)
+
+    }
+
     searchInput(){
         let searchInput = document.querySelector('#searchInput')
         
         let that = this
 
-        
+
 
         
             searchInput.addEventListener('input', function(){
@@ -327,7 +337,16 @@ class init{
                     document.removeEventListener('click', listener, false)
                     
                     that.removeCards()
-                    that.displayData(that.searchSortedCards)
+
+
+                    if(that.searchSortedCards.length != 0){
+                        // if somithing is inputed in searchInput
+                        that.displayData(that.searchSortedCards)
+                    }else{
+                        // if nothing is not inputed in searchInput
+                        that.displayData(recipes)
+                    }
+                    
                     
                 }
             }
@@ -376,6 +395,8 @@ myInit.displaySelect()
 
 
 myInit.searchInput()
+
+myInit.initialSelects()
 
 //tags
 myInit.filterItemClick()
