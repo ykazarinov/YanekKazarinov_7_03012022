@@ -1,6 +1,7 @@
 class init{
     constructor(){
         this.mySelect = []
+        this.searchSortedCards = []
    
 
     }
@@ -59,7 +60,7 @@ class init{
 
     searchInput(){
         let searchInput = document.querySelector('#searchInput')
-        let sortedCards = []
+        
         let that = this
 
         
@@ -76,7 +77,7 @@ class init{
                 that.mySelect[1].removeList()
                 that.mySelect[2].removeList()
                 
-                sortedCards = []
+                that.searchSortedCards = []
                 
 
                 
@@ -89,20 +90,20 @@ class init{
                         
                         if( recipes[i].name.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
 
-                            if(sortedCards.length !== 0){
+                            if(that.searchSortedCards.length !== 0){
                                 
-                                for(let s = 0; s < sortedCards.length; s++){
+                                for(let s = 0; s < that.searchSortedCards.length; s++){
                                     
                                     
-                                    if(sortedCards[s].id !== recipes[i].id){
-                                        sortedCards.push(recipes[i])
+                                    if(that.searchSortedCards[s].id !== recipes[i].id){
+                                        that.searchSortedCards.push(recipes[i])
                                         isAnyOption = true
                                         that.hiddenNullMessage()
                                         break
                                     }
                                 }
                             }else{
-                                sortedCards.push(recipes[i])
+                                that.searchSortedCards.push(recipes[i])
                                 isAnyOption = true
                                 that.hiddenNullMessage()
                             }
@@ -116,18 +117,18 @@ class init{
                     if(isAnyOption === false){
                        
                         if(recipes[i].appliance.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            if(sortedCards.length !== 0){
+                            if(that.searchSortedCards.length !== 0){
                                
-                                for(let s = 0; s < sortedCards.length; s++){
-                                    if(sortedCards[s].id !== recipes[i].id){
-                                        sortedCards.push(recipes[i])
+                                for(let s = 0; s < that.searchSortedCards.length; s++){
+                                    if(that.searchSortedCards[s].id !== recipes[i].id){
+                                        that.searchSortedCards.push(recipes[i])
                                         isAnyOption = true
                                         that.hiddenNullMessage()
                                         break
                                     }
                                 }
                             }else{
-                                sortedCards.push(recipes[i])
+                                that.searchSortedCards.push(recipes[i])
                                 isAnyOption = true
                                 that.hiddenNullMessage()
                             }
@@ -144,19 +145,19 @@ class init{
                         for(let j = 0; j < recipes[i].ingredients.length; j++){
                             if(recipes[i].ingredients[j].ingredient.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
                                 
-                                if(sortedCards.length !== 0){
+                                if(that.searchSortedCards.length !== 0){
                                   
-                                    for(let s = 0; s < sortedCards.length; s++){
+                                    for(let s = 0; s < that.searchSortedCards.length; s++){
                                        
-                                        if(sortedCards[s].id !== recipes[i].id){
-                                            sortedCards.push(recipes[i])
+                                        if(that.searchSortedCards[s].id !== recipes[i].id){
+                                            that.searchSortedCards.push(recipes[i])
                                             isAnyOption = true
                                             that.hiddenNullMessage()
                                             break
                                         }
                                     }
                                 }else{
-                                    sortedCards.push(recipes[i])
+                                    that.searchSortedCards.push(recipes[i])
                                     isAnyOption = true
                                     that.hiddenNullMessage()
                                 }
@@ -173,19 +174,19 @@ class init{
                        
                         for(let j = 0; j < recipes[i].ustensils.length; j++){
                             if(recipes[i].ustensils[j].toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                                if(sortedCards.length !== 0){    
+                                if(that.searchSortedCards.length !== 0){    
                                   
-                                    for(let s = 0; s < sortedCards.length; s++){
+                                    for(let s = 0; s < that.searchSortedCards.length; s++){
                                        
-                                        if(sortedCards[s].id !== recipes[i].id){
-                                            sortedCards.push(recipes[i])
+                                        if(that.searchSortedCards[s].id !== recipes[i].id){
+                                            that.searchSortedCards.push(recipes[i])
                                             isAnyOption = true
                                             that.hiddenNullMessage()
                                             break
                                         }
                                     }
                                 }else{
-                                    sortedCards.push(recipes[i])
+                                    that.searchSortedCards.push(recipes[i])
                                     isAnyOption = true
                                     that.hiddenNullMessage()
                                 }
@@ -201,19 +202,19 @@ class init{
                     if(isAnyOption === false){
                         
                         if(recipes[i].description.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            if(sortedCards.length !== 0){ 
+                            if(that.searchSortedCards.length !== 0){ 
                                
-                                for(let s = 0; s < sortedCards.length; s++){
+                                for(let s = 0; s < that.searchSortedCards.length; s++){
                                     
-                                    if(sortedCards[s].id !== recipes[i].id){
-                                        sortedCards.push(recipes[i])
+                                    if(that.searchSortedCards[s].id !== recipes[i].id){
+                                        that.searchSortedCards.push(recipes[i])
                                         isAnyOption = true
                                         that.hiddenNullMessage()
                                         break
                                     }
                                 }
                             }else{
-                                sortedCards.push(recipes[i])
+                                that.searchSortedCards.push(recipes[i])
                                 isAnyOption = true
                                 that.hiddenNullMessage()
                             }
@@ -223,7 +224,7 @@ class init{
                        
                     }
                     // null results
-                    if(sortedCards.length === 0){
+                    if(that.searchSortedCards.length === 0){
                         let nullResultsMessage = document.querySelector('#aucune-recette')
                         nullResultsMessage.classList.remove('hidden')
                         console.log('display')
@@ -232,20 +233,20 @@ class init{
                 
                 }
                 // set recets cards
-                that.displayData(sortedCards)
+                that.displayData(that.searchSortedCards)
 
                 // set filters lists
                 that.mySelect.forEach((select)=>{
 
-                     select.setListToDOM(sortedCards)
+                     select.setListToDOM(that.searchSortedCards)
                 })
 
                 
-                that.sortSelect(sortedCards)
+                that.sortSelect(that.searchSortedCards)
 
             }
             else{
-                sortedCards = []
+                that.searchSortedCards = []
                 that.removeCards()
                 that.displayData(recipes)
                 // that.sortSelect(recipes)
@@ -262,19 +263,109 @@ class init{
         
     }
 
+
+
+    collectAllTags(){
+        
+        let tags = document.querySelectorAll('.tag')
+        let tagsData = []
+        
+        tags.forEach((elem, i) => {
+            
+            let arr = {}
+            arr['id'] = elem.getAttribute('data-id')
+            arr['type'] = elem.getAttribute('data-type')
+
+            tagsData.push(arr)
+
+            
+
+        })
+        
+        return tagsData
+    }
+
+    createCardsListBasedOnTags(){
+        let tagsData = this.collectAllTags()
+        let sortedRecipes = []
+        for(let i=0; i<recipes.length; i++) {
+            breakLabel: for(let j=0; j<tagsData.length; j++) {
+                if(recipes[i].id == tagsData[j].id){
+                    if(sortedRecipes.length != 0){
+                        for(let z=0; z<sortedRecipes.length; z++){
+                            if(sortedRecipes[z].id != recipes[i].id){
+                               sortedRecipes.push(recipes[i]) 
+                               break breakLabel
+                            }
+                        }
+                    }else{
+                        sortedRecipes.push(recipes[i]) 
+                    }
+                }
+            }
+        }
+        this.removeCards()
+        this.displayData(sortedRecipes)
+
+    }
+
+    closeTag(){
+        let that = this
+        let tags
+        let eventActive = false
+       
+        const listener = function(e){
+            if(e.target.parentElement.classList.contains('tag')){
+                
+                e.target.parentNode.remove()
+                tags = document.querySelectorAll('.tag')
+                if(tags.length != 0){
+                    
+                    that.createCardsListBasedOnTags()
+                   
+                }else{
+                    document.removeEventListener('click', listener, false)
+                    
+                    that.removeCards()
+                    that.displayData(that.searchSortedCards)
+                    
+                }
+            }
+            
+        }
+
+        if(!eventActive){
+            eventActive = true
+            document.addEventListener('click', listener, false)
+            // document.removeEventListener('click', listener, false)
+        }
+            
+    }
+
     filterItemClick(){
+        
+        let that = this
         const tagData = {}
         let tagsContainer = document.querySelector('#tags-section .tags-col')
-        document.addEventListener('click', (e)=>{
-            if(e.target.parentElement.classList.contains('sort-list')){
-                tagData['filterId'] = e.target.parentElement.parentElement.id
-                tagData['filterItemValue'] = e.target.innerHTML
+        let eventActive = false
+        if(!eventActive){
+            eventActive = true
             
-            let newTag = new tagTemplate(tagData)
-            tagsContainer.appendChild(newTag.getTagDOM())
-            newTag.closeTag()
-            }
-        })
+            document.addEventListener('click', (e)=>{
+                
+                if(e.target.parentElement.classList.contains('sort-list')){
+                    
+                    tagData['filterId'] = e.target.parentElement.parentElement.id
+                    tagData['filterItemValue'] = e.target.innerHTML
+                    tagData['reciepId'] = e.target.getAttribute('data-id')
+                
+                let newTag = new tagTemplate(tagData)
+                tagsContainer.appendChild(newTag.getTagDOM())
+                // that.closeTag()
+                that.createCardsListBasedOnTags()
+                }
+            })
+        }
         
     }
 }
@@ -288,6 +379,8 @@ myInit.searchInput()
 
 //tags
 myInit.filterItemClick()
+myInit.closeTag()
+
 
 
 

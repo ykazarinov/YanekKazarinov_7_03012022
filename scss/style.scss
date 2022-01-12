@@ -102,15 +102,7 @@ dt, dd{
 // }
 
 
-.ingredients{
-    background-color: $blue;
-}
-.appareil{
-    background-color: $red;
-}
-.ustensiles{
-    background-color: $green;
-}
+
 
 #ingredients{
     background-color: $blue;
@@ -226,9 +218,20 @@ dt, dd{
 .tags-section{
     display: flex;
 
+
 }
 .tags-col{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    .ingredients{
+        background-color: $blue;
+    }
+    .appareil{
+        background-color: $red;
+    }
+    .ustensiles{
+        background-color: $green;
+    }
 }
 

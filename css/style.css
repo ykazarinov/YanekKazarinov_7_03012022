@@ -22314,18 +22314,6 @@ dd:after {
   flex-wrap: nowrap;
 }
 
-.ingredients {
-  background-color: #3282F7;
-}
-
-.appareil {
-  background-color: #ED6454;
-}
-
-.ustensiles {
-  background-color: #68D9A4;
-}
-
 #ingredients {
   background-color: #3282F7;
 }
@@ -22445,6 +22433,16 @@ dd:after {
 .tags-col {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+}
+.tags-col .ingredients {
+  background-color: #3282F7;
+}
+.tags-col .appareil {
+  background-color: #ED6454;
+}
+.tags-col .ustensiles {
+  background-color: #68D9A4;
 }
 
 /*# sourceMappingURL=style.css.map */

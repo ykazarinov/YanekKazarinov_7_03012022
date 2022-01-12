@@ -66,27 +66,29 @@ class sortSelectTemplate{
         let myInput = that.select.querySelector('input')
 
         let filtredItems = []
-        
+        let filtredIds = []
         
         
             myInput.addEventListener('input', function(){
                 that.removeList()
                 filtredItems = []
+                filtredIds = []
                 if(myInput.value.length >= 3){
-                    for(let i = 0; i < that.getList(myRecipes).length; i++){
-                        if(that.getList(myRecipes)[i].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
+                    for(let i = 0; i < that.getList(myRecipes)[0].length; i++){
+                        if(that.getList(myRecipes)[0][i].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
                             // console.log(that.getList(myRecipes)[i])
                             let itemIsExist = false
                            
                             for(let j = 0; j<filtredItems.length; j++){
-                                if(filtredItems[j].toLowerCase() === that.getList(myRecipes)[i].toLowerCase()){
+                                if(filtredItems[j].toLowerCase() === that.getList(myRecipes)[0][i].toLowerCase()){
                                     itemIsExist = true
                                     break
 
                                 }
                             }
                             if(!itemIsExist){
-                                filtredItems.push(that.getList(myRecipes)[i])
+                                filtredItems.push(that.getList(myRecipes)[0][i])
+                                filtredIds.push(that.getList(myRecipes)[1][i])
                             }
                            
 
@@ -97,8 +99,10 @@ class sortSelectTemplate{
                         // }
                     }
                     // console.log( filtredItems)
-                    filtredItems.forEach((item)=>{
+                    filtredItems.forEach((item, i)=>{
                         let li = document.createElement("li")
+                        li.setAttribute('data-id', filtredIds[i])
+                        console.log(item)
                         li.innerHTML = item
                         that.select.querySelector('.sort-list').appendChild(li)
                     })
@@ -144,6 +148,8 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
     }
     getList(recipes){
         let allIngredients = []
+        let allIds = []
+        
         recipes.forEach((recipe) => {
             recipe.ingredients.forEach((myIngredient) => {
                 let verif = false
@@ -155,17 +161,22 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
                 }
                 if(verif === false){
                     allIngredients.push(myIngredient.ingredient)
+                    allIds.push(recipe.id)
                 }
             })
         })
-        return allIngredients
+        let data = []
+        data[0] = allIngredients
+        data[1] = allIds
+        return data
     }
 
     setListToDOM(recipes){
 
-        this.getList(recipes).forEach((ingredient) => {
+        this.getList(recipes)[0].forEach((ingredient, i) => {
            
             let li = document.createElement("li")
+            li.setAttribute('data-id', this.getList(recipes)[1][i])
             li.innerHTML = ingredient
             this.select.querySelector('.sort-list').appendChild(li)
         })
@@ -194,6 +205,7 @@ class appareilSelectTemplate extends sortSelectTemplate{
     }
     getList(recipes){
         let allAppareils = []
+        let allIds = []
         recipes.forEach((recipe) => {
             let verif = false
             for(let i = 0; i< allAppareils.length; i++){
@@ -203,14 +215,19 @@ class appareilSelectTemplate extends sortSelectTemplate{
             }
             if(verif === false){
                 allAppareils.push(recipe.appliance)
+                allIds.push(recipe.id)
             }
         })
-        return allAppareils
+        let data = []
+        data[0] = allAppareils
+        data[1] = allIds
+        return data
     }
 
     setListToDOM(recipes){
-        this.getList(recipes).forEach((appliance) => {
+        this.getList(recipes)[0].forEach((appliance, i) => {
             let li = document.createElement("li")
+            li.setAttribute('data-id', this.getList(recipes)[1][i])
             li.innerHTML = appliance
             this.select.querySelector('.sort-list').appendChild(li)
         })
@@ -239,6 +256,7 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     }
     getList(recipes){
         let allUstensiles = []
+        let allIds = []
         recipes.forEach((recipe) => {
             recipe.ustensils.forEach((myUstensil) => {
                 let verif = false
@@ -249,16 +267,21 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
                 }
                 if(verif === false){
                     allUstensiles.push(myUstensil)
+                    allIds.push(recipe.id)
                 }
             })
         })
-        return allUstensiles
+        let data = []
+        data[0] = allUstensiles
+        data[1] = allIds
+        return data
     }
 
     setListToDOM(recipes){
         
-        this.getList(recipes).forEach((ustensile) => {
+        this.getList(recipes)[0].forEach((ustensile, i) => {
             let li = document.createElement("li")
+            li.setAttribute('data-id', this.getList(recipes)[1][i])
             li.innerHTML = ustensile
             this.select.querySelector('.sort-list').appendChild(li)
         })

@@ -2,6 +2,7 @@ class tagTemplate{
     constructor(tagData){
         this.filterType = tagData['filterId']
         this.tagValue = tagData['filterItemValue']
+        this.reciepId = tagData['reciepId']
         
         this.filterTypes = ['ingredients', 'appareil', 'ustensiles']
     }
@@ -10,6 +11,8 @@ class tagTemplate{
         
         const tag = document.createElement( 'div' )
         tag.classList.add('tag')
+        tag.setAttribute('data-type', this.filterType)
+        tag.setAttribute('data-id', this.reciepId)
         if(this.filterType === this.filterTypes[0]){
             tag.classList.add(this.filterTypes[0])
         }else if(this.filterType === this.filterTypes[1]){
@@ -24,13 +27,5 @@ class tagTemplate{
         return tag
     }
 
-    closeTag(){
-        document.addEventListener('click', (e)=>{
-            if(e.target.parentElement.classList.contains('tag')){
-                e.target.parentNode.remove()
-            }
-            
 
-        })
-    }
 }
