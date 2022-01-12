@@ -315,6 +315,7 @@ class init{
             }
         }
         this.removeCards()
+        console.log(tagsData)
         this.displayData(sortedRecipes)
 
     }
@@ -329,12 +330,41 @@ class init{
                 
                 e.target.parentNode.remove()
                 tags = document.querySelectorAll('.tag')
+
+                let tagText = e.target.parentElement.textContent.replace(/\s+/g, '')
+                let dataType = e.target.parentElement.getAttribute('data-type')
+                let items
+
+                function findItem(items, sample){
+                    items.forEach((item)=>{
+                        if(item.textContent.replace(/\s+/g, '') == sample){
+                            item.classList.remove('noclick')
+                        }
+                    })
+                }
+
+                switch (dataType) {
+                    case "ingredients":
+                        
+                        items = document.querySelectorAll('#ingredients .sort-list li')
+                        findItem(items, tagText)
+                        break
+                    case "appareil":
+                        items = document.querySelectorAll('#appareil .sort-list li')
+                        findItem(items, tagText)
+                        break
+                    case "ustensiles":
+                        items = document.querySelectorAll('#ustensiles .sort-list li')
+                        findItem(items, tagText)
+                        break
+                }
+
                 if(tags.length != 0){
                     
                     that.createCardsListBasedOnTags()
                    
                 }else{
-                    document.removeEventListener('click', listener, false)
+                    // document.removeEventListener('click', listener, false)
                     
                     that.removeCards()
 
@@ -382,6 +412,8 @@ class init{
                 tagsContainer.appendChild(newTag.getTagDOM())
                 // that.closeTag()
                 that.createCardsListBasedOnTags()
+
+                e.target.classList.add('noclick')
                 }
             })
         }

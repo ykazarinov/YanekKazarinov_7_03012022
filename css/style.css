@@ -22385,11 +22385,17 @@ dd:after {
   border-bottom-right-radius: 5px;
   font-family: "Lato", sans-serif;
   font-size: 1rem;
+  cursor: pointer;
 }
 .sort-select .sort-list li {
   line-height: 1.2rem;
   width: 7.5rem;
   margin-bottom: 0.5rem;
+}
+.sort-select .sort-list li.noclick {
+  pointer-events: none;
+  cursor: unset;
+  color: rgba(255, 255, 255, 0.5);
 }
 .sort-select.active .sort-list {
   display: block;
