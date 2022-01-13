@@ -301,123 +301,47 @@ class init{
     createCardsListBasedOnTags(){
         let tagsData = this.collectAllTags()
         let sortedRecipes = []
-        
-        
+        let sortedRecipesTmp = []
         for(let r = 0; r < tagsData.length; r++){
             if(tagsData[r].type == 'ingredients'){
                 for(let i = 0; i < recipes.length; i++){
-                    //----------------
                     for(let j = 0; j < recipes[i].ingredients.length; j++){
                         console.log(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase())
                         if(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                            if(sortedRecipes.length !== 0){
-                                for(let s = 0; s < sortedRecipes.length; s++){
-                                    if(sortedRecipes[s].id !== recipes[i].id){
-                                        sortedRecipes.push(recipes[i])
-                                       
-                                        break
-                                    }
-                                }
-                            }else{
-                                sortedRecipes.push(recipes[i])
-                            
-                            }
+                            sortedRecipesTmp.push(recipes[i])
                         }
                     }
-                    //----------------
                 }
             }else if(tagsData[r].type == 'appareil'){
                 for(let i = 0; i < recipes.length; i++){
-                    //-----------------
                     if(recipes[i].appliance.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                        if(sortedRecipes.length !== 0){
-                           
-                            for(let s = 0; s < sortedRecipes.length; s++){
-                                if(sortedRecipes[s].id !== recipes[i].id){
-                                    sortedRecipes.push(recipes[i])
-                                   
-                                   
-                                    break
-                                }
-                            }
-                        }else{
-                            sortedRecipes.push(recipes[i])
-                            
-                            
-                        }
-                        
-                       
-                       
+                        sortedRecipesTmp.push(recipes[i])
                     }
-                    //-----------------
-                    
                 }
             }else if(tagsData[r].type == 'ustensiles'){
                 for(let i = 0; i < recipes.length; i++){
-                    //------------------
                     for(let j = 0; j < recipes[i].ustensils.length; j++){
                         if(recipes[i].ustensils[j].replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                            if(sortedRecipes.length !== 0){    
-                              
-                                for(let s = 0; s < sortedRecipes.length; s++){
-                                   
-                                    if(sortedRecipes[s].id !== recipes[i].id){
-                                        sortedRecipes.push(recipes[i])
-
-                                        break
-                                    }
-                                }
-                            }else{
-                                sortedRecipes.push(recipes[i])
-
-                            }
-                            
-                            
-                            
+                            sortedRecipesTmp.push(recipes[i])
                         }
                     }
-                    //------------------
                 }
             }
         }
-        
 
-
-
-
-
-
+        // Je supprime les doublons
+        let sortedRecipesTmpId = []
+        for(let i = 0; i < sortedRecipesTmp.length; i++) {
+            // Si le tableau sortedRecipesTmpId ne contient pas l'id d'une recette (égale à -1) alors je récupère la recette
+            if (sortedRecipesTmpId.indexOf(sortedRecipesTmp[i].id) == -1) {
+                sortedRecipes.push(sortedRecipesTmp[i])
+                sortedRecipesTmpId.push(sortedRecipesTmp[i].id)
+            }
+        }
         this.removeCards()
         this.displayData(sortedRecipes)
-
     }
 
-
-
-    // createCardsListBasedOnTags(){
-    //     let tagsData = this.collectAllTags()
-    //     let sortedRecipes = []
-    //     for(let i=0; i<recipes.length; i++) {
-    //         breakLabel: for(let j=0; j<tagsData.length; j++) {
-    //             if(recipes[i].id == tagsData[j].id){
-    //                 if(sortedRecipes.length != 0){
-    //                     for(let z=0; z<sortedRecipes.length; z++){
-    //                         if(sortedRecipes[z].id != recipes[i].id){
-    //                            sortedRecipes.push(recipes[i]) 
-    //                            break breakLabel
-    //                         }
-    //                     }
-    //                 }else{
-    //                     sortedRecipes.push(recipes[i]) 
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     this.removeCards()
-    //     console.log(tagsData)
-    //     this.displayData(sortedRecipes)
-
-    // }
 
     closeTag(){
         let that = this
