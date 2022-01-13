@@ -39,7 +39,9 @@ class init{
        
         selectIds.forEach((elem, i) => {
             this.mySelect[i].inputTextOnFilter(recipes)
+            
         })
+        
      
     }
 
@@ -65,6 +67,7 @@ class init{
         this.mySelect[2].setListToDOM(recipes)
 
         this.sortSelect(recipes)
+        
 
     }
 
@@ -249,6 +252,7 @@ class init{
                 that.mySelect.forEach((select)=>{
 
                      select.setListToDOM(that.searchSortedCards)
+                     select.quantityChangeEvent()
                 })
 
                 
@@ -259,15 +263,20 @@ class init{
                 that.searchSortedCards = []
                 that.removeCards()
                 that.displayData(recipes)
-                // that.sortSelect(recipes)
+                
 
                 that.mySelect.forEach((select)=>{
                     select.removeList()
                     select.setListToDOM(recipes)
+                    select.quantityChangeEvent()
+                    
                })
+
+               
 
 
             }
+           
             })
         
         
@@ -306,7 +315,6 @@ class init{
             if(tagsData[r].type == 'ingredients'){
                 for(let i = 0; i < recipes.length; i++){
                     for(let j = 0; j < recipes[i].ingredients.length; j++){
-                        console.log(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase())
                         if(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
                             sortedRecipesTmp.push(recipes[i])
                         }
@@ -442,9 +450,13 @@ class init{
         }
         
     }
+
+   
 }
 
 let myInit = new init()
+
+
 myInit.displayData(recipes)
 myInit.displaySelect()
 
@@ -456,6 +468,8 @@ myInit.initialSelects()
 //tags
 myInit.filterItemClick()
 myInit.closeTag()
+
+
 
 
 

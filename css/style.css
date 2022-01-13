@@ -22343,8 +22343,16 @@ dd:after {
   column-count: 5;
 }
 
+.column-4 {
+  column-count: 4;
+}
+
 .column-3 {
   column-count: 3;
+}
+
+.column-2 {
+  column-count: 2;
 }
 
 .column-1 {
@@ -22396,6 +22404,10 @@ dd:after {
   pointer-events: none;
   cursor: unset;
   color: rgba(255, 255, 255, 0.5);
+}
+.sort-select.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .sort-select.active .sort-list {
   display: block;

@@ -102,7 +102,6 @@ class sortSelectTemplate{
                     filtredItems.forEach((item, i)=>{
                         let li = document.createElement("li")
                         li.setAttribute('data-id', filtredIds[i])
-                        console.log(item)
                         li.innerHTML = item
                         that.select.querySelector('.sort-list').appendChild(li)
                     })
@@ -117,8 +116,67 @@ class sortSelectTemplate{
                     that.setListToDOM(myRecipes)
                    
                 }
+                that.quantityChangeEvent()
             })
         
+    }
+    deleteCSSClassesColumn(elem){
+       
+        let myClassList = elem.classList
+        
+        myClassList.forEach((myClass) => {
+            if(myClass.indexOf('column-') !== -1){
+                elem.classList.remove(myClass)
+               
+            }
+        })
+    }
+
+    quantityChangeEvent(){
+        
+        let that = this
+        var target = document.querySelectorAll('.sort-list')
+        let myCount
+       
+        target.forEach((filter) => {
+
+            myCount = filter.children.length
+            console.log(myCount)
+            if(myCount >= 0 && myCount < 7){
+                // console.log('test1')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-1')
+            }
+            else if(myCount >= 7 && myCount < 15){
+                // console.log('test1')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-2')
+            }
+            else if(myCount >= 15 && myCount < 25){
+                // console.log('test2')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-3')
+                }
+            else if(myCount >= 25 && myCount < 40){
+                // console.log('test2')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-4')
+                }
+            else if(myCount >= 40 && myCount < 80){
+                // console.log('test3')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-5')
+            }
+            else if(myCount >= 80){
+                // console.log('test4')
+                that.deleteCSSClassesColumn(filter)
+                filter.classList.add('column-8')
+            }
+
+        })
+      
+       
+          
     }
 
     
@@ -145,6 +203,14 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
 
     inputTextOnFilter(myRecipes){
         return super.inputTextOnFilter(myRecipes)
+    }
+
+    deleteCSSClassesColumn(elem){
+        return super.deleteCSSClassesColumn(elem)
+    }
+
+    quantityChangeEvent(){
+        return super.quantityChangeEvent()
     }
     getList(recipes){
         let allIngredients = []
@@ -203,6 +269,13 @@ class appareilSelectTemplate extends sortSelectTemplate{
     inputTextOnFilter(myRecipes){
         return super.inputTextOnFilter(myRecipes)
     }
+    deleteCSSClassesColumn(elem){
+        return super.deleteCSSClassesColumn(elem)
+    }
+
+    quantityChangeEvent(){
+        return super.quantityChangeEvent()
+    }
     getList(recipes){
         let allAppareils = []
         let allIds = []
@@ -253,6 +326,13 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     }
     inputTextOnFilter(myRecipes){
         return super.inputTextOnFilter(myRecipes)
+    }
+    deleteCSSClassesColumn(elem){
+        return super.deleteCSSClassesColumn(elem)
+    }
+
+    quantityChangeEvent(){
+        return super.quantityChangeEvent()
     }
     getList(recipes){
         let allUstensiles = []
