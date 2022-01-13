@@ -219,7 +219,6 @@ class init{
         
         tags.forEach((elem, i) => {
             let arr = {}
-            arr['id'] = elem.getAttribute('data-id')
             arr['type'] = elem.getAttribute('data-type')
             arr['text'] = elem.textContent.replace(/\s+/g, '')
             tagsData.push(arr)
@@ -231,31 +230,74 @@ class init{
         let tagsData = this.collectAllTags()
         let sortedRecipes = []
         let sortedRecipesTmp = []
-        for(let r = 0; r < tagsData.length; r++){
-            if(tagsData[r].type == 'ingredients'){
-                for(let i = 0; i < recipes.length; i++){
+
+        let ingredientFound
+        let appareilFound
+        let ustensilesFound
+
+        let allTagsTypes = []
+
+        tagsData.forEach((myTagData) => {
+            if(allTagsTypes.indexOf(myTagData['type']) == -1){
+                allTagsTypes.push(myTagData['type'])
+            }
+        })
+
+        for(let i = 0; i < recipes.length; i++){ 
+            ingredientFound = false
+            appareilFound = false
+            ustensilesFound = false 
+            for(let r = 0; r < tagsData.length; r++){
+                if(tagsData[r].type == 'ingredients'){
                     for(let j = 0; j < recipes[i].ingredients.length; j++){
                         if(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                            sortedRecipesTmp.push(recipes[i])
+                            ingredientFound = true
                         }
                     }
-                }
-            }else if(tagsData[r].type == 'appareil'){
-                for(let i = 0; i < recipes.length; i++){
+                  
+                }else if(tagsData[r].type == 'appareil'){
                     if(recipes[i].appliance.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                        sortedRecipesTmp.push(recipes[i])
+                        appareilFound = true
                     }
-                }
-            }else if(tagsData[r].type == 'ustensiles'){
-                for(let i = 0; i < recipes.length; i++){
+                    
+                }else if(tagsData[r].type == 'ustensiles'){
                     for(let j = 0; j < recipes[i].ustensils.length; j++){
                         if(recipes[i].ustensils[j].replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
-                            sortedRecipesTmp.push(recipes[i])
+                            ustensilesFound = true
                         }
                     }
                 }
+            } 
+
+            if(!ingredientFound){
+                if(allTagsTypes.indexOf('ingredients') == -1){
+                    ingredientFound = true
+                }
             }
+            
+            if(!appareilFound){
+                if(allTagsTypes.indexOf('appareil')  == -1){
+                    appareilFound = true
+                }
+            }
+            if(!ustensilesFound){
+                if(allTagsTypes.indexOf('ustensiles') == -1){
+                    ustensilesFound = true
+                }
+            }
+            console.log(ingredientFound, appareilFound, ustensilesFound)
+            
+            if(ingredientFound && appareilFound && ustensilesFound){
+                sortedRecipesTmp.push(recipes[i])
+            }
+            
         }
+
+
+
+       
+
+
 
         // Je supprime les doublons
         let sortedRecipesTmpId = []
@@ -343,7 +385,6 @@ class init{
                 if(e.target.parentElement.classList.contains('sort-list')){
                     tagData['filterId'] = e.target.parentElement.parentElement.id
                     tagData['filterItemValue'] = e.target.innerHTML
-                    tagData['reciepId'] = e.target.getAttribute('data-id')
                     let newTag = new tagTemplate(tagData)
                     tagsContainer.appendChild(newTag.getTagDOM())
                     that.createCardsListBasedOnTags()

@@ -12,7 +12,6 @@ class tagTemplate{
         const tag = document.createElement( 'div' )
         tag.classList.add('tag')
         tag.setAttribute('data-type', this.filterType)
-        tag.setAttribute('data-id', this.reciepId)
         if(this.filterType === this.filterTypes[0]){
             tag.classList.add(this.filterTypes[0])
         }else if(this.filterType === this.filterTypes[1]){
