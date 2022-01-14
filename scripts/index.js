@@ -221,9 +221,10 @@ class init{
         tags.forEach((elem, i) => {
             let arr = {}
             arr['type'] = elem.getAttribute('data-type')
-            arr['text'] = elem.textContent.replace(/\s+/g, '')
+            arr['text'] = elem.getAttribute('data-tag')
             tagsData.push(arr)
         })
+       
         return tagsData
     }
 
@@ -236,38 +237,73 @@ class init{
         let appareilFound
         let ustensilesFound
 
+        let countGoodIngrediends
+        let countGoodAppareil
+        let countGoodUsensiles
+
+        let ingredientsTagsCount = 0
+        let appareilTagsCount = 0
+        let usensilesTagsCount = 0
+
         let allTagsTypes = []
 
         tagsData.forEach((myTagData) => {
             if(allTagsTypes.indexOf(myTagData['type']) == -1){
                 allTagsTypes.push(myTagData['type'])
             }
+            if(myTagData['type'] == 'ingredients'){
+                ingredientsTagsCount++
+            }
+            if(myTagData['type'] == 'appareil'){
+                appareilTagsCount++
+            }
+            if(myTagData['type'] == 'ustensiles'){
+                usensilesTagsCount++
+            }
         })
+        
 
         for(let i = 0; i < recipes.length; i++){ 
-            ingredientFound = false
-            appareilFound = false
-            ustensilesFound = false 
+                ingredientFound = false
+                appareilFound = false
+                ustensilesFound = false 
+
+                countGoodIngrediends = 0
+                countGoodAppareil = 0
+                countGoodUsensiles = 0
             for(let r = 0; r < tagsData.length; r++){
+
                 if(tagsData[r].type == 'ingredients'){
                     for(let j = 0; j < recipes[i].ingredients.length; j++){
-                        if(recipes[i].ingredients[j].ingredient.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
+                        if(recipes[i].ingredients[j].ingredient.toLowerCase() === tagsData[r].text.toLowerCase()){
+                            countGoodIngrediends++
+                        }
+                        if(countGoodIngrediends === ingredientsTagsCount){
                             ingredientFound = true
                         }
                     }
                   
                 }else if(tagsData[r].type == 'appareil'){
-                    if(recipes[i].appliance.replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
+                    if(recipes[i].appliance.toLowerCase() === tagsData[r].text.toLowerCase()){
+                        countGoodAppareil++
+                        
+                    }
+                    if(countGoodAppareil === appareilTagsCount){
                         appareilFound = true
                     }
                     
                 }else if(tagsData[r].type == 'ustensiles'){
                     for(let j = 0; j < recipes[i].ustensils.length; j++){
-                        if(recipes[i].ustensils[j].replace(/\s+/g, '').toLowerCase().indexOf(tagsData[r].text.toLowerCase()) !== -1){
+                        if(recipes[i].ustensils[j].toLowerCase() === tagsData[r].text.toLowerCase()){
+                            countGoodUsensiles++
+                        }
+                        if(countGoodUsensiles === usensilesTagsCount){
                             ustensilesFound = true
+                            
                         }
                     }
                 }
+                
             } 
 
             if(!ingredientFound){
@@ -286,7 +322,7 @@ class init{
                     ustensilesFound = true
                 }
             }
-            // console.log(ingredientFound, appareilFound, ustensilesFound)
+            //  console.log(ingredientFound, appareilFound, ustensilesFound)
             
             if(ingredientFound && appareilFound && ustensilesFound){
                 sortedRecipesTmp.push(recipes[i])
@@ -382,21 +418,8 @@ class init{
                             })
                         }
                     }
-                    switch (dataType) {
-                        case "ingredients":
-                            
-                            // items = document.querySelectorAll('#ingredients .sort-list li')
-                            findItem(that.notActiveTagsNames, tagText)
-                            break
-                        case "appareil":
-                            // items = document.querySelectorAll('#appareil .sort-list li')
-                            findItem(that.notActiveTagsNames, tagText)
-                            break
-                        case "ustensiles":
-                            // items = document.querySelectorAll('#ustensiles .sort-list li')
-                            findItem(that.notActiveTagsNames, tagText)
-                            break
-                    }
+
+                    findItem(that.notActiveTagsNames, tagText)
                 }
             
         }

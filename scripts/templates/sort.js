@@ -55,7 +55,14 @@ class sortSelectTemplate{
             that.select.classList.add('col-md-5')
             
             that.select.classList.add('active')
-            input.setAttribute('placeholder', 'Recherche un ingredient') 
+
+            if(that.name == 'Ingredients'){
+                input.setAttribute('placeholder', 'Recherche un ingredient') 
+            }else if(that.name == 'Appareil'){
+                input.setAttribute('placeholder', 'Recherche un appareil')
+            }else{
+                input.setAttribute('placeholder', 'Recherche une ustensile')
+            }
         } 
         
        })
