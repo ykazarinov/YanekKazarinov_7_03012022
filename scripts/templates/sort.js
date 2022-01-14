@@ -72,10 +72,12 @@ class sortSelectTemplate{
         let that = this
         let myInput = that.select.querySelector('input')
         let filtredItems = []
+
  
         myInput.addEventListener('input', function(){
             that.removeList()
             filtredItems = []
+
             if(myInput.value.length >= 3){
                 for(let i = 0; i < that.getList(myRecipes)[0].length; i++){
                     if(that.getList(myRecipes)[0][i].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
@@ -94,6 +96,7 @@ class sortSelectTemplate{
                 filtredItems.forEach((item, i)=>{
                     let li = document.createElement("li")
                     li.innerHTML = item
+                    li.setAttribute('data-tag', item)
                     that.select.querySelector('.sort-list').appendChild(li)
                 })
             }
