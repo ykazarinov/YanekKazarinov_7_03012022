@@ -118,7 +118,7 @@ class sortSelectTemplate{
         target.forEach((filter) => {
 
             myCount = filter.children.length
-            console.log(myCount)
+            // console.log(myCount)
             if(myCount >= 0 && myCount < 7){
                 // console.log('test1')
                 that.deleteCSSClassesColumn(filter)
@@ -220,6 +220,7 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
            
             let li = document.createElement("li")
             li.innerHTML = ingredient
+            li.setAttribute('data-tag', ingredient)
             this.select.querySelector('.sort-list').appendChild(li)
         })
     }
@@ -277,6 +278,7 @@ class appareilSelectTemplate extends sortSelectTemplate{
         this.getList(recipes)[0].forEach((appliance, i) => {
             let li = document.createElement("li")
             li.innerHTML = appliance
+            li.setAttribute('data-tag', appliance)
             this.select.querySelector('.sort-list').appendChild(li)
         })
     }
@@ -337,6 +339,7 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
         this.getList(recipes)[0].forEach((ustensile, i) => {
             let li = document.createElement("li")
             li.innerHTML = ustensile
+            li.setAttribute('data-tag', ustensile)
             this.select.querySelector('.sort-list').appendChild(li)
         })
     }

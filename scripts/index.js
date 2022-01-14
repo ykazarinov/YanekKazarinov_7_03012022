@@ -2,6 +2,7 @@ class init{
     constructor(){
         this.mySelect = []
         this.searchSortedCards = []
+        this.notActiveTagsNames = []
      }
 
     displayData(cards) {
@@ -285,19 +286,13 @@ class init{
                     ustensilesFound = true
                 }
             }
-            console.log(ingredientFound, appareilFound, ustensilesFound)
+            // console.log(ingredientFound, appareilFound, ustensilesFound)
             
             if(ingredientFound && appareilFound && ustensilesFound){
                 sortedRecipesTmp.push(recipes[i])
             }
             
         }
-
-
-
-       
-
-
 
         // Je supprime les doublons
         let sortedRecipesTmpId = []
@@ -310,6 +305,14 @@ class init{
         }
         this.removeCards()
         this.displayData(sortedRecipes)
+
+        // change lists of the filters
+        this.mySelect.forEach((select)=>{
+            select.removeList()
+            select.setListToDOM(sortedRecipes)
+            select.quantityChangeEvent()
+            
+       })
     }
 
 
@@ -318,59 +321,89 @@ class init{
         let tags
         let eventActive = false
         const listener = function(e){
-            if(e.target.parentElement.classList.contains('tag')){
-                
-                e.target.parentNode.remove()
-                tags = document.querySelectorAll('.tag')
-
-                let tagText = e.target.parentElement.textContent.replace(/\s+/g, '')
-                let dataType = e.target.parentElement.getAttribute('data-type')
-                let items
-
-                function findItem(items, sample){
-                    items.forEach((item)=>{
-                        if(item.textContent.replace(/\s+/g, '') == sample){
-                            item.classList.remove('noclick')
-                        }
-                    })
-                }
-
-                switch (dataType) {
-                    case "ingredients":
-                        
-                        items = document.querySelectorAll('#ingredients .sort-list li')
-                        findItem(items, tagText)
-                        break
-                    case "appareil":
-                        items = document.querySelectorAll('#appareil .sort-list li')
-                        findItem(items, tagText)
-                        break
-                    case "ustensiles":
-                        items = document.querySelectorAll('#ustensiles .sort-list li')
-                        findItem(items, tagText)
-                        break
-                }
-
-                if(tags.length != 0){
+           
+                if(e.target.parentElement.classList.contains('tag')){
                     
-                    that.createCardsListBasedOnTags()
-                   
-                }else{
-                    that.removeCards()
-                    if(that.searchSortedCards.length != 0){
-                        // if somithing is inputed in searchInput
-                        that.displayData(that.searchSortedCards)
+                    e.target.parentNode.remove()
+                    tags = document.querySelectorAll('.tag')
+
+                    let tagText = e.target.parentElement.getAttribute('data-tag')
+                    let dataType = e.target.parentElement.getAttribute('data-type')
+                    // let items
+
+                    function findItem(items, sample){
+                        // items.forEach((item)=>{
+                        //     if(item.textContent.replace(/\s+/g, '') == sample){
+                        //         item.classList.remove('noclick')
+                        //     }
+                        // })
+                        let myIndex
+                        
+                        myIndex = items.indexOf(sample)
+                        if(myIndex != -1){
+                            items.splice(myIndex, 1)
+                        }
+                        
+                        items.forEach((item)=>{
+                            if(document.querySelector('li[data-tag="'+item+'"]')){
+                                document.querySelector('li[data-tag="'+item+'"]').classList.add('noclick')
+                            }
+                            
+                        })
+                    }
+
+
+
+                    if(tags.length != 0){
+                        
+                        that.createCardsListBasedOnTags()
+                    
                     }else{
-                        // if nothing is not inputed in searchInput
-                        that.displayData(recipes)
+                        that.removeCards()
+                        if(that.searchSortedCards.length != 0){
+                            // if somithing is inputed in searchInput
+                            that.displayData(that.searchSortedCards)
+
+                            // change lists of the filters
+                            that.mySelect.forEach((select)=>{
+                                select.removeList()
+                                select.setListToDOM(that.searchSortedCards)
+                                select.quantityChangeEvent()
+                                    
+                            })
+                        }else{
+                            // if nothing is not inputed in searchInput
+                            that.displayData(recipes)
+                            that.mySelect.forEach((select)=>{
+                                select.removeList()
+                                select.setListToDOM(recipes)
+                                select.quantityChangeEvent()
+                                    
+                            })
+                        }
+                    }
+                    switch (dataType) {
+                        case "ingredients":
+                            
+                            // items = document.querySelectorAll('#ingredients .sort-list li')
+                            findItem(that.notActiveTagsNames, tagText)
+                            break
+                        case "appareil":
+                            // items = document.querySelectorAll('#appareil .sort-list li')
+                            findItem(that.notActiveTagsNames, tagText)
+                            break
+                        case "ustensiles":
+                            // items = document.querySelectorAll('#ustensiles .sort-list li')
+                            findItem(that.notActiveTagsNames, tagText)
+                            break
                     }
                 }
-            }
+            
         }
 
         if(!eventActive){
             eventActive = true
-            document.addEventListener('click', listener, false)
+            document.querySelector('.tags-col').addEventListener('click', listener, false)
         }
     }
 
@@ -382,13 +415,24 @@ class init{
         if(!eventActive){
             eventActive = true
             document.addEventListener('click', (e)=>{
+                let targetDataTagAttr = e.target.getAttribute('data-tag')
                 if(e.target.parentElement.classList.contains('sort-list')){
                     tagData['filterId'] = e.target.parentElement.parentElement.id
-                    tagData['filterItemValue'] = e.target.innerHTML
+                    // tagData['filterItemValue'] = e.target.innerHTML
+                    tagData['filterItemValue'] = e.target.getAttribute('data-tag')
+                    // console.log(tagData['filterItemValue'])
                     let newTag = new tagTemplate(tagData)
                     tagsContainer.appendChild(newTag.getTagDOM())
                     that.createCardsListBasedOnTags()
-                    e.target.classList.add('noclick')
+                    that.notActiveTagsNames.push(targetDataTagAttr)
+                    
+                    that.notActiveTagsNames.forEach((notActiveTagName)=>{
+                        if(document.querySelector('li[data-tag="'+notActiveTagName+'"]')){
+                            document.querySelector('li[data-tag="'+notActiveTagName+'"]').classList.add('noclick')
+                        }
+                        
+                    })
+                    
                 }
             })
         }
