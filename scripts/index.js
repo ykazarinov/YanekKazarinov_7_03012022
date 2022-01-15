@@ -33,8 +33,16 @@ class init{
 
     sortSelect(recipes){
         let selectIds = document.querySelectorAll('.sort-select')
+        // console.log(this.mySelect)
+
+        
+        
+        
+       
+        
         selectIds.forEach((elem, i) => {
-            this.mySelect[i].inputTextOnFilter(recipes)
+            // let myObj = '1'
+            this.mySelect[i].inputTextOnFilter(recipes, this.mySelect)
         })
     }
 
@@ -430,6 +438,21 @@ class init{
         }
     }
 
+    // filterBlur(){
+    //     let allInputs = document.querySelectorAll('.sort-select input')
+    //     let selectId
+
+    //     allInputs.forEach((myInput)=> {
+    //         myInput.addEventListener('blur', (e)=>{
+    //             selectId = e.target.parentNode.id
+                
+    //             e.target.value = ''
+    //             e.target.parentNode.classList.remove('active')
+                
+    //         })
+    //     })
+    // }
+
     filterItemClick(){
         let that = this
         const tagData = {}
@@ -438,8 +461,20 @@ class init{
         if(!eventActive){
             eventActive = true
             document.addEventListener('click', (e)=>{
+
+               
+
                 let targetDataTagAttr = e.target.getAttribute('data-tag')
                 if(e.target.parentElement.classList.contains('sort-list')){
+
+                     //clear all filters
+                    e.target.parentNode.parentNode.querySelector('input').value = ''
+
+                    //close select
+                    // e.target.parentNode.parentNode.classList.remove('active')
+                        
+                
+
                     tagData['filterId'] = e.target.parentElement.parentElement.id
                     // tagData['filterItemValue'] = e.target.innerHTML
                     tagData['filterItemValue'] = e.target.getAttribute('data-tag')
@@ -457,6 +492,8 @@ class init{
                     })
                     
                 }
+
+                
             })
         }
     }
@@ -474,6 +511,8 @@ myInit.initialSelects()
 //tags
 myInit.filterItemClick()
 myInit.closeTag()
+
+
 
 
 

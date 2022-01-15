@@ -23,6 +23,11 @@ class sortSelectTemplate{
         let allSelects = document.querySelectorAll('.sort-select')
 
        input.addEventListener('click', function(){
+
+        // allSelects.forEach((select)=>{
+        //     select.querySelector('input').value = ''
+        // })
+
         if(that.select.classList.contains('active')){
             that.select.classList.remove('active')
             
@@ -68,17 +73,137 @@ class sortSelectTemplate{
        })
     }
 
-    inputTextOnFilter(myRecipes){
+    inputTextOnFilter(myRecipes, allSelects){
         let that = this
         let myInput = that.select.querySelector('input')
         let filtredItems = []
 
+        let filtredRecipesTmp = []
+        let filtredRecipes = []
+        
  
         myInput.addEventListener('input', function(){
-            that.removeList()
-            filtredItems = []
+        
+            // 0. If user input data in the inputElement, we delete all data from anouther inputs
+            let ourInput
+            allSelects.forEach((mySelect)=>{
+                ourInput = document.querySelector('#'+mySelect.id + ' input')
+                if(mySelect.id != that.select.id){
+                    ourInput.value = ''
+                }
+            })
+            // 0-end
 
             if(myInput.value.length >= 3){
+
+                // 1. Get recipes:
+                if(that.id === 'ingredients'){
+                    filtredRecipesTmp = []
+                    
+                    for(let i = 0; i < recipes.length; i++){
+                        
+                        for(let j = 0; j < recipes[i].ingredients.length; j++){
+                            if(recipes[i].ingredients[j].ingredient.toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
+                                
+                                if(filtredRecipesTmp.length !== 0){
+                                    for(let s = 0; s < filtredRecipesTmp.length; s++){
+                                        if(filtredRecipesTmp[s].id != recipes[i].id){
+                                            filtredRecipesTmp.push(recipes[i])
+                                            break
+                                        }
+                                    }
+                                }else{
+                                    filtredRecipesTmp.push(recipes[i])
+                                 
+                                }
+                            }
+                            else{
+                                
+                                allSelects.forEach((mySelect)=>{
+                                    mySelect.removeList()
+                                })
+                            }
+                        }
+                    }
+                }
+                if(that.id === 'appareil'){
+                    filtredRecipesTmp = []
+                    for(let i = 0; i < recipes.length; i++){
+                        
+                        if(recipes[i].appliance.toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
+                            if(filtredRecipesTmp.length !== 0){
+                                for(let s = 0; s < filtredRecipesTmp.length; s++){
+                                    if(filtredRecipesTmp[s].id !== recipes[i].id){
+                                        filtredRecipesTmp.push(recipes[i])
+                                      
+                                        break
+                                    }
+                                }
+                            }else{
+                                filtredRecipesTmp.push(recipes[i])
+                                
+                            }
+                        } else{
+                           
+                            allSelects.forEach((mySelect)=>{
+                                mySelect.removeList()
+                            })
+                        }
+                    }
+                }
+                if(that.id === 'ustensiles'){
+                    filtredRecipesTmp = []
+                    for(let i = 0; i < recipes.length; i++){
+                        
+                        for(let j = 0; j < recipes[i].ustensils.length; j++){
+                            if(recipes[i].ustensils[j].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
+                                if(filtredRecipesTmp.length !== 0){    
+                                    for(let s = 0; s < filtredRecipesTmp.length; s++){
+                                        if(filtredRecipesTmp[s].id !== recipes[i].id){
+                                            filtredRecipesTmp.push(recipes[i])
+                                           
+                                            break
+                                        }
+                                    }
+                                }else{
+                                    filtredRecipesTmp.push(recipes[i])
+                                   
+                                }
+                            } else{
+                                
+                                allSelects.forEach((mySelect)=>{
+                                    mySelect.removeList()
+                                })
+                            }
+                        }
+                       
+                    }
+                }
+                // 1-end
+                // 2. delete dubles
+                
+                let filtredRecipesTmpId = []
+                filtredRecipes = []
+                for(let i = 0; i < filtredRecipesTmp.length; i++) {
+                    // Si le tableau sortedRecipesTmpId ne contient pas l'id d'une recette (égale à -1) alors je récupère la recette
+                    if (filtredRecipesTmpId.indexOf(filtredRecipesTmp[i].id) == -1) {
+                        filtredRecipes.push(filtredRecipesTmp[i])
+                        filtredRecipesTmpId.push(filtredRecipesTmp[i].id)
+                    }
+                }
+                // 2-end
+                console.log(filtredRecipes)
+                //3. set items
+                allSelects.forEach((mySelect)=>{
+                    mySelect.removeList()
+                    mySelect.setListToDOM(filtredRecipes)
+                })
+                // 3-end
+
+
+                // 4. set items in current filter
+                filtredItems = []
+                that.removeList()
                 for(let i = 0; i < that.getList(myRecipes)[0].length; i++){
                     if(that.getList(myRecipes)[0][i].toLowerCase().indexOf(myInput.value.toLowerCase()) !== -1){
                         let itemIsExist = false
@@ -99,11 +224,24 @@ class sortSelectTemplate{
                     li.setAttribute('data-tag', item)
                     that.select.querySelector('.sort-list').appendChild(li)
                 })
+                // 4-end
+
+
+
+                
             }
             else{
-                that.setListToDOM(myRecipes)
+                    
+                
+                    allSelects.forEach((mySelect)=>{
+                        mySelect.removeList()
+                        mySelect.setListToDOM(myRecipes)
+                    })
+
             }
-            that.quantityChangeEvent()
+            allSelects.forEach((mySelect)=>{
+                mySelect.quantityChangeEvent()
+            })
         })
     }
 
@@ -188,8 +326,8 @@ class ingredientsSelectTemplate extends sortSelectTemplate{
         return super.removeList()
     }
 
-    inputTextOnFilter(myRecipes){
-        return super.inputTextOnFilter(myRecipes)
+    inputTextOnFilter(myRecipes, allSelects){
+        return super.inputTextOnFilter(myRecipes, allSelects)
     }
 
     deleteCSSClassesColumn(elem){
@@ -253,8 +391,8 @@ class appareilSelectTemplate extends sortSelectTemplate{
     removeList(){
         return super.removeList()
     }
-    inputTextOnFilter(myRecipes){
-        return super.inputTextOnFilter(myRecipes)
+    inputTextOnFilter(myRecipes, allSelects){
+        return super.inputTextOnFilter(myRecipes, allSelects)
     }
     deleteCSSClassesColumn(elem){
         return super.deleteCSSClassesColumn(elem)
@@ -311,8 +449,8 @@ class ustensilesSelectTemplate extends sortSelectTemplate{
     removeList(){
         return super.removeList()
     }
-    inputTextOnFilter(myRecipes){
-        return super.inputTextOnFilter(myRecipes)
+    inputTextOnFilter(myRecipes, allSelects){
+        return super.inputTextOnFilter(myRecipes, allSelects)
     }
     deleteCSSClassesColumn(elem){
         return super.deleteCSSClassesColumn(elem)
