@@ -33,15 +33,7 @@ class init{
 
     sortSelect(recipes){
         let selectIds = document.querySelectorAll('.sort-select')
-        // console.log(this.mySelect)
-
-        
-        
-        
-       
-        
         selectIds.forEach((elem, i) => {
-            // let myObj = '1'
             this.mySelect[i].inputTextOnFilter(recipes, this.mySelect)
         })
     }
@@ -70,143 +62,106 @@ class init{
         let searchInput = document.querySelector('#searchInput')
         let that = this
 
+        let resultTmp = []
+
         searchInput.addEventListener('input', function(){
             that.clearValuesOfFilters()
-
-            // hide the message with null results
             that.hiddenNullMessage()
-            
             if(searchInput.value.length >= 3){
+                console.time('doSomething')
                 that.mySelect[0].removeList()
                 that.mySelect[1].removeList()
                 that.mySelect[2].removeList()
                 that.searchSortedCards = []
                 that.removeCards()
 
-                for(let i = 0; i < recipes.length; i++){
-                    let isAnyOption = false
-                    // name
-                    if(isAnyOption === false){
-                        if( recipes[i].name.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            if(that.searchSortedCards.length !== 0){
-                                for(let s = 0; s < that.searchSortedCards.length; s++){
-                                    if(that.searchSortedCards[s].id !== recipes[i].id){
-                                        that.searchSortedCards.push(recipes[i])
-                                        isAnyOption = true
-                                        that.hiddenNullMessage()
-                                        break
-                                    }
-                                }
-                            }else{
-                                that.searchSortedCards.push(recipes[i])
-                                isAnyOption = true
-                                that.hiddenNullMessage()
-                            }
-                        }
-                    }
-                    // appliance
-                    if(isAnyOption === false){
-                        if(recipes[i].appliance.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            if(that.searchSortedCards.length !== 0){
-                                for(let s = 0; s < that.searchSortedCards.length; s++){
-                                    if(that.searchSortedCards[s].id !== recipes[i].id){
-                                        that.searchSortedCards.push(recipes[i])
-                                        isAnyOption = true
-                                        that.hiddenNullMessage()
-                                        break
-                                    }
-                                }
-                            }else{
-                                that.searchSortedCards.push(recipes[i])
-                                isAnyOption = true
-                                that.hiddenNullMessage()
-                            }
-                        }
-                    }
-
-                    // ingredients
-                    if(isAnyOption === false){
-                        for(let j = 0; j < recipes[i].ingredients.length; j++){
-                            if(recipes[i].ingredients[j].ingredient.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                                if(that.searchSortedCards.length !== 0){
-                                    for(let s = 0; s < that.searchSortedCards.length; s++){
-                                        if(that.searchSortedCards[s].id !== recipes[i].id){
-                                            that.searchSortedCards.push(recipes[i])
-                                            isAnyOption = true
-                                            that.hiddenNullMessage()
-                                            break
-                                        }
-                                    }
-                                }else{
-                                    that.searchSortedCards.push(recipes[i])
-                                    isAnyOption = true
-                                    that.hiddenNullMessage()
-                                }
-                            }
-                        }
-                    }
-
-                    // ustensils
-                    if(isAnyOption === false){ 
-                        for(let j = 0; j < recipes[i].ustensils.length; j++){
-                            if(recipes[i].ustensils[j].toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                                if(that.searchSortedCards.length !== 0){    
-                                    for(let s = 0; s < that.searchSortedCards.length; s++){
-                                        if(that.searchSortedCards[s].id !== recipes[i].id){
-                                            that.searchSortedCards.push(recipes[i])
-                                            isAnyOption = true
-                                            that.hiddenNullMessage()
-                                            break
-                                        }
-                                    }
-                                }else{
-                                    that.searchSortedCards.push(recipes[i])
-                                    isAnyOption = true
-                                    that.hiddenNullMessage()
-                                }
-                            }
-                        }
-                    }
-
-                    // description
-                    if(isAnyOption === false){
-                        if(recipes[i].description.toLowerCase().indexOf(searchInput.value.toLowerCase()) !== -1){
-                            if(that.searchSortedCards.length !== 0){ 
-                                for(let s = 0; s < that.searchSortedCards.length; s++){
-                                    if(that.searchSortedCards[s].id !== recipes[i].id){
-                                        that.searchSortedCards.push(recipes[i])
-                                        isAnyOption = true
-                                        that.hiddenNullMessage()
-                                        break
-                                    }
-                                }
-                            }else{
-                                that.searchSortedCards.push(recipes[i])
-                                isAnyOption = true
-                                that.hiddenNullMessage()
-                            }
-                        }
-                    }
-                    // null results
-                    if(that.searchSortedCards.length === 0){
-                        let nullResultsMessage = document.querySelector('#aucune-recette')
-                        nullResultsMessage.classList.remove('hidden')
-                    }
+                // name
+                recipes.filter(
+                    rec => rec.name.toLowerCase().includes(
+                        searchInput.value.toLowerCase()
+                        )
+                    ).forEach((myResult)=>{
+                        resultTmp.push(myResult)
+                })
                 
+                // Appliance
+                recipes.filter(
+                    rec => rec.appliance.toLowerCase().includes(
+                        searchInput.value.toLowerCase()
+                    )
+                ).forEach((myResult) => {
+                    resultTmp.push(myResult)
+                })
+                
+                // description
+                recipes.filter(
+                    rec => rec.description.toLowerCase().includes(
+                        searchInput.value.toLowerCase()
+                    )
+                ).forEach((myResult) => {
+                    resultTmp.push(myResult)
+                })
+
+                // ustensils
+                recipes.filter(
+                    rec => rec.ustensils.find(
+                        ust => ust.toLowerCase().includes(
+                            searchInput.value.toLowerCase()
+                        )
+                    )
+                ).forEach((myResult) => {
+                    resultTmp.push(myResult)
+                })
+                    
+                // ingredients
+                recipes.filter(
+                    rec => rec.ingredients.find(
+                        ing => ing.ingredient.toLowerCase().includes(
+                            searchInput.value.toLowerCase()
+                        )
+                    )
+                ).forEach((myResult) => {
+                    resultTmp.push(myResult)
+                })
+
+
+                
+                // Je supprime les doublons
+                let sortedRecipesTmpId = []
+                that.searchSortedCards = []
+                for(let i = 0; i < resultTmp.length; i++) {
+                    // Si le tableau sortedRecipesTmpId ne contient pas l'id d'une recette (égale à -1) alors je récupère la recette
+                    if (sortedRecipesTmpId.indexOf(resultTmp[i].id) == -1) {
+                        that.searchSortedCards.push(resultTmp[i])
+                        sortedRecipesTmpId.push(resultTmp[i].id)
+                    }
+                } 
+                resultTmp = []
+
+                // console.log(that.searchSortedCards)
+
+                // null results
+                if(that.searchSortedCards.length === 0){
+                    let nullResultsMessage = document.querySelector('#aucune-recette')
+                    nullResultsMessage.classList.remove('hidden')
+                }else{
+                    that.hiddenNullMessage()
                 }
-                // set recets cards
+
+                //  // set recets cards
+                that.removeCards()
                 that.displayData(that.searchSortedCards)
 
                 // set filters lists
                 that.mySelect.forEach((select)=>{
-                     select.setListToDOM(that.searchSortedCards)
-                     select.quantityChangeEvent()
+                    select.setListToDOM(that.searchSortedCards)
+                    select.quantityChangeEvent()
                 })
 
                 that.sortSelect(that.searchSortedCards)
-
-            }
-            else{
+                console.timeEnd('doSomething')
+                
+            }else{
                 that.searchSortedCards = []
                 that.removeCards()
                 that.displayData(recipes)
@@ -220,7 +175,9 @@ class init{
             }
         })
     }
+        
 
+    
     collectAllTags(){
         
         let tags = document.querySelectorAll('.tag')
