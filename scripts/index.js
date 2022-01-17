@@ -77,6 +77,7 @@ class init{
             that.hiddenNullMessage()
             
             if(searchInput.value.length >= 3){
+                console.time('doSomething')
                 that.mySelect[0].removeList()
                 that.mySelect[1].removeList()
                 that.mySelect[2].removeList()
@@ -204,7 +205,7 @@ class init{
                 })
 
                 that.sortSelect(that.searchSortedCards)
-
+                console.timeEnd('doSomething')
             }
             else{
                 that.searchSortedCards = []
